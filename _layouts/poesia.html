@@ -1,0 +1,17 @@
+---
+layout: default
+---
+{% assign r = site.data.raccolte | where: "slug", page.raccolta | first %}
+{% assign fratelli = site.poesie | where: "raccolta", page.raccolta | sort: "ordine" %}
+<article class="poesia">
+  {% if r %}<p class="sopratitolo"><a href="{{ '/raccolte/' | append: r.slug | append: '/' | relative_url }}">{{ r.nome }}</a></p>{% endif %}
+  <h1>{{ page.title }}</h1>
+  <div class="versi">{{ content }}</div>
+</article>
+<nav class="sfoglia">
+{% for p in fratelli %}{% if p.url == page.url %}
+  {% assign i = forloop.index0 %}{% assign ip = i | minus: 1 %}{% assign is = i | plus: 1 %}
+  {% if i > 0 %}{% assign prec = fratelli[ip] %}<a class="prec" href="{{ prec.url | relative_url }}">← {{ prec.title }}</a>{% else %}<span></span>{% endif %}
+  {% assign succ = fratelli[is] %}{% if succ %}<a class="succ" href="{{ succ.url | relative_url }}">{{ succ.title }} →</a>{% endif %}
+{% endif %}{% endfor %}
+</nav>

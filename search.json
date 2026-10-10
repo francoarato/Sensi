@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /search.json
+---
+[{% for p in site.poesie %}{% assign r = site.data.raccolte | where: "slug", p.raccolta | first %}{"t":{{ p.title | jsonify }},"u":{{ p.url | relative_url | jsonify }},"r":{{ r.nome | jsonify }},"s":{{ p.raccolta | jsonify }},"c":{{ p.content | strip_html | normalize_whitespace | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]

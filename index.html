@@ -1,0 +1,9 @@
+---
+layout: default
+---
+<h1 class="vh">{{ site.title }}</h1>
+<ul class="raccolte">
+{% for r in site.data.raccolte %}
+<li><a href="{{ '/raccolte/' | append: r.slug | append: '/' | relative_url }}"><span class="num">{{ forloop.index }}</span>{{ r.nome }}</a></li>
+{% endfor %}
+</ul>

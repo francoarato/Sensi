@@ -1,0 +1,11 @@
+title: "Zero e l'anello"
+author: "Franco Arato"
+lang: it
+collections:
+  poesie:
+    output: true
+    permalink: /poesie/:name/
+defaults:
+  - scope: {path: "", type: poesie}
+    values: {layout: poesia}
+exclude: [LEGGIMI.md]

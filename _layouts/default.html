@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>{% include head.html %}</head>
+<body class="{% if page.url == '/' %}home{% endif %}">
+<div class="banner" role="img" aria-label="Agnolo Bronzino, Allegoria del trionfo di Venere, particolare"></div>
+<header class="testata">
+  <a class="marchio" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  <nav>
+    <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+    <a href="{{ '/raccolte/' | relative_url }}"{% if page.url contains '/raccolte/' %} aria-current="page"{% endif %}>Raccolte</a>
+    <a href="{{ '/chi-sono/' | relative_url }}"{% if page.url == '/chi-sono/' %} aria-current="page"{% endif %}>Chi sono</a>
+    <a href="{{ '/contatti/' | relative_url }}"{% if page.url == '/contatti/' %} aria-current="page"{% endif %}>Contatti</a>
+    <a href="{{ '/cerca/' | relative_url }}"{% if page.url == '/cerca/' %} aria-current="page"{% endif %}>Cerca</a>
+    <button id="tema" type="button" aria-label="Cambia tema chiaro/scuro">◐</button>
+  </nav>
+</header>
+<main>{{ content }}</main>
+<footer>© {{ 'now' | date: '%Y' }} {{ site.author }}</footer>
+<script>document.getElementById('tema').onclick=function(){var r=document.documentElement,t=r.dataset.tema==='scuro'?'chiaro':'scuro';r.dataset.tema=t;localStorage.setItem('tema',t)};</script>
+</body>
+</html>

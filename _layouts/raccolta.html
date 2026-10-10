@@ -1,0 +1,11 @@
+---
+layout: default
+---
+{% assign r = site.data.raccolte | where: "slug", page.raccolta | first %}
+<p class="sopratitolo"><a href="{{ '/raccolte/' | relative_url }}">Raccolte</a></p>
+<h1>{{ r.nome }}</h1>
+{{ content }}
+{% assign lista = site.poesie | where: "raccolta", page.raccolta | sort: "ordine" %}
+<ol class="elenco">
+{% for p in lista %}<li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>{% endfor %}
+</ol>

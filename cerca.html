@@ -1,0 +1,31 @@
+---
+layout: default
+title: Cerca
+permalink: /cerca/
+---
+<h1>Cerca</h1>
+<div class="ricerca">
+  <input id="q" type="search" placeholder="Una parola, un verso, un titolo…" autocomplete="off">
+  <select id="f"><option value="">Tutte le raccolte</option>{% for r in site.data.raccolte %}<option value="{{ r.slug }}">{{ r.nome }}</option>{% endfor %}</select>
+</div>
+<p id="stato" class="sopratitolo"></p>
+<ul id="ris" class="elenco"></ul>
+<script>
+(function(){
+var D=[],q=document.getElementById('q'),f=document.getElementById('f'),ris=document.getElementById('ris'),st=document.getElementById('stato');
+var norm=function(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')};
+var esc=function(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+function run(){
+  var t=norm(q.value.trim()),r=f.value;ris.innerHTML='';
+  if(!t&&!r){st.textContent='';return}
+  var out=D.filter(function(d){return(!r||d.s===r)&&(!t||norm(d.t+' '+d.c).indexOf(t)>-1)});
+  st.textContent=out.length+(out.length===1?' risultato':' risultati');
+  out.forEach(function(d){
+    var c=norm(d.c),i=t?c.indexOf(t):-1,ex='';
+    if(i>-1){var a=Math.max(0,i-40);ex=(a>0?'…':'')+d.c.substr(a,t.length+90)+'…'}
+    ris.insertAdjacentHTML('beforeend','<li><a href="'+d.u+'">'+esc(d.t)+'</a><span>'+esc(d.r||'')+(ex?' · '+esc(ex):'')+'</span></li>')});
+}
+fetch('{{ "/search.json" | relative_url }}').then(function(x){return x.json()}).then(function(j){D=j;run()});
+q.addEventListener('input',run);f.addEventListener('change',run);q.focus();
+})();
+</script>

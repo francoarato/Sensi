@@ -1,0 +1,12 @@
+---
+layout: default
+title: Raccolte
+permalink: /raccolte/
+---
+<h1>Raccolte</h1>
+<ul class="raccolte">
+{% for r in site.data.raccolte %}
+{% assign n = site.poesie | where: "raccolta", r.slug | size %}
+<li><a href="{{ '/raccolte/' | append: r.slug | append: '/' | relative_url }}"><span class="num">{{ forloop.index }}</span>{{ r.nome }}</a><span class="conta">{{ n }} {% if n == 1 %}testo{% else %}testi{% endif %}</span></li>
+{% endfor %}
+</ul>
